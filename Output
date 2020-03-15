@@ -1,6 +1,6 @@
 Elliptic Curve Cryptography
 Point Modular Exponentiation:
-From p^1 ---> p^50
+From p^1 ---> p^5
 With the following Variable Input:
 		px = 3;
 		py = 388;
@@ -11,199 +11,23 @@ With the following Variable Input:
 (3,388)^1 (mod 7919) On:
 y^2 mod7919= (x^3 +13x +17)mod 7919
 1p^1 = 1*P =  (3, 388)
+
 Point Modular Exponentiation:
 (3,388)^2 (mod 7919) On:
 y^2 mod7919= (x^3 +13x +17)mod 7919
 2p^2 = 2*P =  (7727, 765)
+
 Point Modular Exponentiation:
 (3,388)^3 (mod 7919) On:
 y^2 mod7919= (x^3 +13x +17)mod 7919
 3p^3 = 3*P =  (7619, 610)
+
 Point Modular Exponentiation:
 (3,388)^4 (mod 7919) On:
 y^2 mod7919= (x^3 +13x +17)mod 7919
 4p^4 = 4*P =  (5470, 1971)
+
 Point Modular Exponentiation:
 (3,388)^5 (mod 7919) On:
 y^2 mod7919= (x^3 +13x +17)mod 7919
 5p^5 = 5*P =  (3998, 3047)
-Point Modular Exponentiation:
-(3,388)^6 (mod 7919) On:
-y^2 mod7919= (x^3 +13x +17)mod 7919
-6p^6 = 6*P =  (530, 6203)
-Point Modular Exponentiation:
-(3,388)^7 (mod 7919) On:
-y^2 mod7919= (x^3 +13x +17)mod 7919
-7p^7 = 7*P =  (1475, 1627)
-Point Modular Exponentiation:
-(3,388)^8 (mod 7919) On:
-y^2 mod7919= (x^3 +13x +17)mod 7919
-8p^8 = 8*P =  (1984, 6493)
-Point Modular Exponentiation:
-(3,388)^9 (mod 7919) On:
-y^2 mod7919= (x^3 +13x +17)mod 7919
-9p^9 = 9*P =  (7360, 4446)
-Point Modular Exponentiation:
-(3,388)^10 (mod 7919) On:
-y^2 mod7919= (x^3 +13x +17)mod 7919
-10p^10 = 10*P =  (3327, 3830)
-Point Modular Exponentiation:
-(3,388)^11 (mod 7919) On:
-y^2 mod7919= (x^3 +13x +17)mod 7919
-11p^11 = 11*P =  (3396, 1173)
-Point Modular Exponentiation:
-(3,388)^12 (mod 7919) On:
-y^2 mod7919= (x^3 +13x +17)mod 7919
-12p^12 = 12*P =  (1437, 6282)
-Point Modular Exponentiation:
-(3,388)^13 (mod 7919) On:
-y^2 mod7919= (x^3 +13x +17)mod 7919
-13p^13 = 13*P =  (5600, 2761)
-Point Modular Exponentiation:
-(3,388)^14 (mod 7919) On:
-y^2 mod7919= (x^3 +13x +17)mod 7919
-14p^14 = 14*P =  (1904, 3468)
-Point Modular Exponentiation:
-(3,388)^15 (mod 7919) On:
-y^2 mod7919= (x^3 +13x +17)mod 7919
-15p^15 = 15*P =  (3240, 4790)
-Point Modular Exponentiation:
-(3,388)^16 (mod 7919) On:
-y^2 mod7919= (x^3 +13x +17)mod 7919
-16p^16 = 16*P =  (1840, 7012)
-Point Modular Exponentiation:
-(3,388)^17 (mod 7919) On:
-y^2 mod7919= (x^3 +13x +17)mod 7919
-17p^17 = 17*P =  (822, 4345)
-Point Modular Exponentiation:
-(3,388)^18 (mod 7919) On:
-y^2 mod7919= (x^3 +13x +17)mod 7919
-18p^18 = 18*P =  (7295, 1249)
-Point Modular Exponentiation:
-(3,388)^19 (mod 7919) On:
-y^2 mod7919= (x^3 +13x +17)mod 7919
-19p^19 = 19*P =  (6155, 1505)
-Point Modular Exponentiation:
-(3,388)^20 (mod 7919) On:
-y^2 mod7919= (x^3 +13x +17)mod 7919
-20p^20 = 20*P =  (1763, 1352)
-Point Modular Exponentiation:
-(3,388)^21 (mod 7919) On:
-y^2 mod7919= (x^3 +13x +17)mod 7919
-21p^21 = 21*P =  (934, 7543)
-Point Modular Exponentiation:
-(3,388)^22 (mod 7919) On:
-y^2 mod7919= (x^3 +13x +17)mod 7919
-22p^22 = 22*P =  (7224, 5223)
-Point Modular Exponentiation:
-(3,388)^23 (mod 7919) On:
-y^2 mod7919= (x^3 +13x +17)mod 7919
-23p^23 = 23*P =  (5902, 2161)
-Point Modular Exponentiation:
-(3,388)^24 (mod 7919) On:
-y^2 mod7919= (x^3 +13x +17)mod 7919
-24p^24 = 24*P =  (3534, 2723)
-Point Modular Exponentiation:
-(3,388)^25 (mod 7919) On:
-y^2 mod7919= (x^3 +13x +17)mod 7919
-25p^25 = 25*P =  (3244, 2627)
-Point Modular Exponentiation:
-(3,388)^26 (mod 7919) On:
-y^2 mod7919= (x^3 +13x +17)mod 7919
-26p^26 = 26*P =  (6741, 6788)
-Point Modular Exponentiation:
-(3,388)^27 (mod 7919) On:
-y^2 mod7919= (x^3 +13x +17)mod 7919
-27p^27 = 27*P =  (7049, 6830)
-Point Modular Exponentiation:
-(3,388)^28 (mod 7919) On:
-y^2 mod7919= (x^3 +13x +17)mod 7919
-28p^28 = 28*P =  (3650, 7139)
-Point Modular Exponentiation:
-(3,388)^29 (mod 7919) On:
-y^2 mod7919= (x^3 +13x +17)mod 7919
-29p^29 = 29*P =  (5002, 4444)
-Point Modular Exponentiation:
-(3,388)^30 (mod 7919) On:
-y^2 mod7919= (x^3 +13x +17)mod 7919
-30p^30 = 30*P =  (436, 6310)
-Point Modular Exponentiation:
-(3,388)^31 (mod 7919) On:
-y^2 mod7919= (x^3 +13x +17)mod 7919
-31p^31 = 31*P =  (7836, 2233)
-Point Modular Exponentiation:
-(3,388)^32 (mod 7919) On:
-y^2 mod7919= (x^3 +13x +17)mod 7919
-32p^32 = 32*P =  (597, 6278)
-Point Modular Exponentiation:
-(3,388)^33 (mod 7919) On:
-y^2 mod7919= (x^3 +13x +17)mod 7919
-33p^33 = 33*P =  (3865, 6858)
-Point Modular Exponentiation:
-(3,388)^34 (mod 7919) On:
-y^2 mod7919= (x^3 +13x +17)mod 7919
-34p^34 = 34*P =  (2868, 5766)
-Point Modular Exponentiation:
-(3,388)^35 (mod 7919) On:
-y^2 mod7919= (x^3 +13x +17)mod 7919
-35p^35 = 35*P =  (1027, 4318)
-Point Modular Exponentiation:
-(3,388)^36 (mod 7919) On:
-y^2 mod7919= (x^3 +13x +17)mod 7919
-36p^36 = 36*P =  (4772, 1153)
-Point Modular Exponentiation:
-(3,388)^37 (mod 7919) On:
-y^2 mod7919= (x^3 +13x +17)mod 7919
-37p^37 = 37*P =  (993, 2115)
-Point Modular Exponentiation:
-(3,388)^38 (mod 7919) On:
-y^2 mod7919= (x^3 +13x +17)mod 7919
-38p^38 = 38*P =  (1284, 281)
-Point Modular Exponentiation:
-(3,388)^39 (mod 7919) On:
-y^2 mod7919= (x^3 +13x +17)mod 7919
-39p^39 = 39*P =  (374, 595)
-Point Modular Exponentiation:
-(3,388)^40 (mod 7919) On:
-y^2 mod7919= (x^3 +13x +17)mod 7919
-40p^40 = 40*P =  (5297, 4812)
-Point Modular Exponentiation:
-(3,388)^41 (mod 7919) On:
-y^2 mod7919= (x^3 +13x +17)mod 7919
-41p^41 = 41*P =  (4662, 5310)
-Point Modular Exponentiation:
-(3,388)^42 (mod 7919) On:
-y^2 mod7919= (x^3 +13x +17)mod 7919
-42p^42 = 42*P =  (7377, 1194)
-Point Modular Exponentiation:
-(3,388)^43 (mod 7919) On:
-y^2 mod7919= (x^3 +13x +17)mod 7919
-43p^43 = 43*P =  (6942, 4556)
-Point Modular Exponentiation:
-(3,388)^44 (mod 7919) On:
-y^2 mod7919= (x^3 +13x +17)mod 7919
-44p^44 = 44*P =  (2459, 2688)
-Point Modular Exponentiation:
-(3,388)^45 (mod 7919) On:
-y^2 mod7919= (x^3 +13x +17)mod 7919
-45p^45 = 45*P =  (784, 4362)
-Point Modular Exponentiation:
-(3,388)^46 (mod 7919) On:
-y^2 mod7919= (x^3 +13x +17)mod 7919
-46p^46 = 46*P =  (7623, 1975)
-Point Modular Exponentiation:
-(3,388)^47 (mod 7919) On:
-y^2 mod7919= (x^3 +13x +17)mod 7919
-47p^47 = 47*P =  (6647, 1982)
-Point Modular Exponentiation:
-(3,388)^48 (mod 7919) On:
-y^2 mod7919= (x^3 +13x +17)mod 7919
-48p^48 = 48*P =  (228, 5949)
-Point Modular Exponentiation:
-(3,388)^49 (mod 7919) On:
-y^2 mod7919= (x^3 +13x +17)mod 7919
-49p^49 = 49*P =  (2717, 5248)
-Point Modular Exponentiation:
-(3,388)^50 (mod 7919) On:
-y^2 mod7919= (x^3 +13x +17)mod 7919
-50p^50 = 50*P =  (2728, 7314)
