@@ -1,0 +1,419 @@
+
+/*
+ * Luis Serpas
+ * BigInteger Arithmetic for Elliptic Curves
+*/
+import java.math.BigInteger;
+
+public class BigEllipse {
+	static BigInteger fish(BigInteger a, BigInteger y, BigInteger r, BigInteger p, boolean showSteps) {
+		if (!gcd(a, p, false).equals(BigInteger.ONE))
+			return BigInteger.valueOf(-1);
+
+		if (showSteps) {
+			System.out.println("Fish: Extend Euclid Algorithm:");
+			System.out.println(a + "(x) + " + y + " = " + r + "(mod " + p + ")");
+			System.out.println(a + "(x) + " + y.mod(p) + "(mod" + p + ") = " + r + "(mod " + p + ")");
+			System.out.println(a + "(x) = (" + r + " - " + y.mod(p) + " + " + p + ")(mod " + p + ")");
+		}
+		r = r.subtract(y.mod(p)).add(p);
+
+		BigInteger[][] fins = new BigInteger[northFish(a, p)][3];
+		BigInteger x = BigInteger.ZERO;
+		// step 1
+		BigInteger t = p;
+		BigInteger b = a;
+		int count = 0;
+		// step 2
+		BigInteger f = t.divide(b);
+		BigInteger h = t.subtract(f.multiply(b));
+		fins[count][1] = f; // quotients
+		fins[count][0] = a;
+		count++;
+		// step 3
+		t = b;
+		b = h;
+		while (!h.equals(BigInteger.ONE))// h>1
+		{ // step 2
+			f = t.divide(b);
+			fins[count][1] = f;
+			fins[count][0] = h;
+			h = t.subtract(f.multiply(b));
+			count++;
+			t = b;
+			b = h;
+			// step 4
+		}
+		x = southFish(fins);
+		if ((count) % 2 != 0)
+			x = p.subtract(x);
+		if (showSteps) {
+			System.out.println("x = " + r.mod(p) + "*" + a + "^-1 (mod " + p + ")");
+			System.out.println("x = " + r.mod(p) + "*" + x + " (mod " + p + ")");
+		}
+		x = x.multiply(r);
+		x = x.mod(p);
+		if (showSteps) {
+			System.out.println("x = " + x);
+			System.out.print(a + "*" + x + " (mod " + p + ") = " + (a.multiply(x).mod(p)) + "\n\n" + p + "|");
+		}
+		return x;
+	}
+
+	static int northFish(BigInteger a, BigInteger p) { // step 1
+		BigInteger t = p;
+		BigInteger b = a;
+		int count = 0;
+		// step 2
+		BigInteger f = t.divide(b);
+		BigInteger h = t.subtract(f.multiply(b));
+		count++;
+		// step 3
+		t = b;
+		b = h;
+		while (!h.equals(BigInteger.ONE)) { // step 2
+			f = t.divide(b);
+			h = t.subtract(f.multiply(b));
+			count++;
+			t = b;
+			b = h;
+		}
+		return count;
+	}
+
+	static BigInteger southFish(BigInteger[][] fins) { // step 5
+		BigInteger t = BigInteger.ZERO;
+		BigInteger b = BigInteger.ONE;
+		int flag = fins.length;
+		BigInteger f = fins[flag - 1][1];
+		// step 6
+		BigInteger h = f.multiply(b).add(t);
+		fins[flag - 1][2] = h;
+		flag--;
+		// step 7
+		t = b;
+		b = h;
+		while (flag != 0) {
+			f = fins[flag - 1][1];
+			// step 6
+			h = f.multiply(b).add(t);
+			fins[flag - 1][2] = h;
+			flag--;
+			t = b;
+			b = h;
+		}
+		return h;
+	}
+
+	static BigInteger gcd(BigInteger a, BigInteger b, boolean showSteps) {
+		a = a.abs();
+		b = b.abs();
+		if (!b.equals(BigInteger.ZERO) && a.compareTo(b) < 0) {
+			BigInteger t = a;
+			a = b;
+			b = t;
+		}
+		BigInteger q = a;
+		BigInteger r = BigInteger.ZERO;
+
+		if (showSteps && !b.equals(BigInteger.ZERO) && !q.divide(b).equals(BigInteger.ZERO)) {
+			r = a.mod(b);
+			q = q.divide(b);
+			System.out.println(a + " = " + q + " (" + b + ") " + "+" + r);
+		}
+		if (b.signum() <= 0) {
+			if (showSteps && a.equals(BigInteger.ONE))// a==1)
+			{
+				System.out.println("Euclidian Algorithm ");
+				System.out.println("Relatively Prime:");
+				System.out.print("gcd: " + a);
+			} else if (showSteps) {
+				System.out.println("Euclidian Algorithm ");
+				System.out.println("gcd: " + a);
+			}
+			return a;
+		} else
+			return gcd(b, a.mod(b), showSteps);
+	}
+
+	static BigInteger modExp(BigInteger a, BigInteger b, BigInteger n, boolean showSteps) {
+		BigInteger r = BigInteger.ONE;
+
+		if (showSteps) {
+			System.out.println("Efficient Modular Exponentiation:");
+			System.out.print(a + "^" + b + " (mod " + n + ") = ");
+		}
+		while (true) {
+			if (b.mod(BigInteger.valueOf(2)).equals(BigInteger.ONE))
+				r = r.multiply(a).mod(n); // multiply
+			b = b.divide(BigInteger.valueOf(2));
+			if (b.equals(BigInteger.ZERO))
+				break;
+			a = a.multiply(a).mod(n); // square
+		}
+		if (showSteps)
+			System.out.println(r);
+		if (r.signum() < 0)
+			r = (r.mod(n).add(n)).mod(n);
+		return r;
+	}
+
+//ecc
+//all points on Elliptic Curve
+	static int E(BigInteger p, BigInteger a, BigInteger b, boolean show, boolean result) {
+		if (show) {
+			System.out.println("E" + p + "(" + a + "," + b + ")");
+			System.out.println("y^2 mod " + p + "= (x^3 + " + a + "x + " + b + ")mod " + p);
+		}
+		// Discriminate
+		int count = 1;
+		BigInteger dim = (a.pow(3).multiply(BigInteger.valueOf(4)).add((b.pow(2).multiply(BigInteger.valueOf(27)))))
+				.mod(p);
+
+		if (dim.mod(p).equals(BigInteger.ZERO))
+			return -1;
+
+		BigInteger x = BigInteger.ZERO;
+		BigInteger y = BigInteger.ZERO;
+		for (BigInteger i = BigInteger.ZERO; i.compareTo(p) < 0; i = i.add(BigInteger.ONE)) {
+			for (BigInteger j = BigInteger.ZERO; j.compareTo(p) < 0; j = j.add(BigInteger.ONE)) {
+				x = i;
+				y = j;
+				BigInteger left = y.pow(2);
+				left = modExp(left, BigInteger.ONE, p, false);
+				BigInteger right = (x.pow(3).add(a.multiply(x).add(b))).mod(p);
+				right = modExp(right, BigInteger.ONE, p, false);
+
+				if (left.compareTo(right) == 0) {
+					count++;
+					if (show)
+						System.out.println("(" + x + ", " + y + ")");
+				}
+			}
+		}
+		if (result)
+			System.out.println("Order of Ellipse: " + count + "\n");
+		return count;
+	}
+
+	static void findGen(BigInteger p, BigInteger a, BigInteger b) {
+		// Discriminate
+		BigInteger dim = (a.pow(3).multiply(BigInteger.valueOf(4)).add((b.pow(2).multiply(BigInteger.valueOf(27)))))
+				.mod(p);
+		if (dim.mod(p).equals(BigInteger.ZERO))
+			return;
+
+		BigInteger x = BigInteger.ZERO;
+		BigInteger y = BigInteger.ZERO;
+		for (BigInteger i = BigInteger.ZERO; i.compareTo(p) < 0; i = i.add(BigInteger.ONE)) {
+			for (BigInteger j = BigInteger.ZERO; j.compareTo(p) < 0; j = j.add(BigInteger.ONE)) {
+				x = i;
+				y = j;
+				BigInteger left = y.pow(2);
+				left = modExp(left, BigInteger.ONE, p, false);
+				BigInteger right = (x.pow(3).add(a.multiply(x).add(b))).mod(p);
+				right = modExp(right, BigInteger.ONE, p, false);
+
+				if (left.compareTo(right) == 0) {
+					if (isEllipticGen(x, y, p, a, b, false)) {
+						System.out.println("G = (" + x + ", " + y + ")");
+						return;
+					}
+				}
+			}
+		}
+	}
+
+	static BigInteger[] twoP(BigInteger xp, BigInteger yp, BigInteger p, BigInteger a, BigInteger b, boolean show,
+			boolean result) {
+
+		BigInteger[] poi = new BigInteger[2];
+		if (show) {
+			System.out.println("Find 2P for p=" + "(" + xp + "," + yp + ")");
+			System.out.println("On curve E" + p + "(" + a + "," + b + ")");
+			System.out.println("y^2 mod" + p + "= (x^3 +" + a + "x +" + b + ")mod " + p);
+		}
+
+		BigInteger alphatop = xp.pow(2).multiply(BigInteger.valueOf(3)).add(a);
+		BigInteger alphabot = yp.multiply(BigInteger.valueOf(2));
+
+		BigInteger commondiv = BigInteger.ONE;
+		if (!alphatop.equals(BigInteger.ZERO) && !alphabot.equals(BigInteger.ZERO))
+			commondiv = gcd(alphatop, alphabot, false);
+
+		alphatop = alphatop.divide(commondiv);
+		alphabot = alphabot.divide(commondiv);
+
+		if (alphatop.compareTo(p) >= 0 || alphatop.signum() < 0)
+			alphatop = modExp(alphatop, BigInteger.ONE, p, false);
+		if (alphabot.compareTo(p) >= 0 || alphabot.signum() < 0)
+			alphabot = modExp(alphabot, BigInteger.ONE, p, false);
+
+		BigInteger alpha = BigInteger.ZERO;
+		if (alphabot.equals(BigInteger.ONE))
+			alpha = alphatop.mod(p);
+		else
+			alpha = fish(alphabot, BigInteger.ZERO, alphatop, p, false);
+
+		BigInteger xr = alpha.pow(2).subtract(xp.multiply(BigInteger.valueOf(2))); // x2p
+		xr = modExp(xr, BigInteger.ONE, p, false);
+		BigInteger yr = (alpha.multiply(xp.subtract(xr))).subtract(yp); // y2p
+		yr = modExp(yr, BigInteger.ONE, p, false);
+
+		poi[0] = xr;
+		poi[1] = yr;
+		if (result)
+			System.out.println("2P = (" + xr + ", " + yr + ")");
+		return poi;
+	}
+
+	static BigInteger[] addpq(BigInteger xp, BigInteger yp, BigInteger xq, BigInteger yq, BigInteger p, BigInteger a,
+			BigInteger b, boolean show, boolean result) {
+
+		BigInteger[] poi = new BigInteger[2];
+		poi[0] = BigInteger.ZERO;
+		poi[1] = BigInteger.ZERO;
+		if (show) {
+			System.out.println("Find P + Q for \np=" + "(" + xp + "," + yp + ") & q=" + "(" + xq + "," + yq + ")");
+			System.out.println("On curve E" + p + "(" + a + "," + b + ")");
+			System.out.println("y^2 mod" + p + "= (x^3 +" + a + "x +" + b + ")mod " + p);
+		}
+
+		// Identity
+		if (xq.equals(BigInteger.ZERO) && yq.equals(BigInteger.ZERO)) {
+			poi[0] = xp;
+			poi[1] = yp;
+			if (show)
+				System.out.println("P = (" + poi[0] + ", " + poi[1] + ")");
+			return poi;
+		}
+		if (xp.equals(BigInteger.ZERO) && yp.equals(BigInteger.ZERO)) {
+			poi[0] = xq;
+			poi[1] = yq;
+			if (show)
+				System.out.println("P = (" + poi[0] + ", " + poi[1] + ")");
+			return poi;
+		}
+
+		if ((xp.equals(xq) && yp.equals(yq))) {
+			poi = twoP(xp, yp, p, a, b, false, false);
+			if (result)
+				System.out.println("P+Q = (" + poi[0] + ", " + poi[1] + ")");
+			return poi;
+		}
+
+		BigInteger alphatop = yq.subtract(yp);
+		BigInteger alphabot = xq.subtract(xp);
+
+		BigInteger commondiv = BigInteger.ONE;
+		if (!alphatop.equals(BigInteger.ZERO) && !alphabot.equals(BigInteger.ZERO))
+			commondiv = gcd(alphatop, alphabot, false);
+
+		alphatop = alphatop.divide(commondiv);
+		alphabot = alphabot.divide(commondiv);
+
+		if (alphatop.compareTo(p) >= 0 || alphatop.signum() < 0)
+			alphatop = modExp(alphatop, BigInteger.ONE, p, false);
+		if (alphabot.compareTo(p) >= 0 || alphabot.signum() < 0)
+			alphabot = modExp(alphabot, BigInteger.ONE, p, false);
+
+		BigInteger alpha = BigInteger.ZERO;
+
+		if (alphabot.equals(BigInteger.ZERO) && !alphatop.equals(BigInteger.ZERO)) {
+			if (result)
+				System.out.println("P+Q = (" + poi[0] + ", " + poi[1] + ")");
+			return poi;
+		}
+		if (alphabot.equals(BigInteger.ONE))
+			alpha = alphatop.mod(p);
+		else
+			alpha = fish(alphabot, BigInteger.ZERO, alphatop, p, false);
+
+		BigInteger xr = alpha.pow(2).subtract(xp).subtract(xq); // x(p+q)
+		xr = modExp(xr, BigInteger.ONE, p, false);
+		BigInteger yr = (alpha.multiply(xp.subtract(xr))).subtract(yp); // y(p+q)
+		yr = modExp(yr, BigInteger.ONE, p, false);
+
+		if (result)
+			System.out.println("P+Q = (" + xr + ", " + yr + ")");
+		poi[0] = xr;
+		poi[1] = yr;
+		return poi;
+	}
+
+	static BigInteger[] pointModExp(BigInteger xp, BigInteger yp, BigInteger exp, BigInteger p, BigInteger a,
+			BigInteger b, boolean show, boolean result) {
+		BigInteger k = exp;
+
+		BigInteger[] pr = new BigInteger[2];
+		pr[0] = BigInteger.ZERO;
+		pr[1] = BigInteger.ZERO;
+		BigInteger[] pp = new BigInteger[2];
+		pp[0] = xp;
+		pp[1] = yp;
+		if (show) {
+			System.out.println("Point Modular Exponentiation:");
+			System.out.println("(" + xp + "," + yp + ")^" + exp + " (mod " + p + ") On:");
+			System.out.print("y^2 mod" + p + "= (x^3 +" + a + "x +" + b + ")mod " + p + "\n" + exp);
+		}
+		while (true) {
+			if (exp.mod(BigInteger.valueOf(2)).equals(BigInteger.ONE))
+				pr = addpq(pr[0], pr[1], pp[0], pp[1], p, a, b, false, false);
+
+			exp = exp.divide(BigInteger.valueOf(2));
+			if (exp.equals(BigInteger.ZERO))
+				break;
+
+			pp = twoP(pp[0], pp[1], p, a, b, false, false);
+		}
+
+		if (result)
+			System.out.println("p^" + k + " = " + k + "*P =  (" + pr[0] + ", " + pr[1] + ")");
+		return pr;
+	}
+
+	static boolean isEllipticGen(BigInteger xp, BigInteger yp, BigInteger p, BigInteger a, BigInteger b, boolean show) {
+		BigInteger ord = BigInteger.valueOf(E(p, a, b, false, false));
+		BigInteger[] points = new BigInteger[2];
+		points = pointModExp(xp, yp, ord, p, a, b, false, false);
+
+		if (points[0].equals(BigInteger.ZERO) && points[1].equals(BigInteger.ZERO)) {
+			if (show) {
+				System.out.println(xp + ", " + yp + "||" + "Is generator for:");
+				System.out.print("y^2 mod" + p + "= (x^3 +" + a + "x +" + b + ")mod " + p);
+			}
+			return true;
+		}
+		if (show) {
+			System.out.println("Not generator for: ");
+			System.out.print("y^2 mod" + p + "= (x^3 +" + a + "x +" + b + ")mod " + p);
+		}
+		return false;
+	}
+
+	public static void main(String[] args) {
+		System.out.println("Elliptic Curve Cryptography");
+		long px, py, p, a, b, exp;
+
+		px = 3;
+		py = 388;
+		a = 13;// a = 23456788891234L;
+		b = 17;
+		p = 7919;// p=761;//p = 1223;
+
+		BigInteger bqx, bqy, bpx, bpy, bp, ba, bb, bexp;
+		bpx = BigInteger.valueOf(px);
+		bpy = BigInteger.valueOf(py);
+		bp = BigInteger.valueOf(p);
+		ba = BigInteger.valueOf(a);
+		bb = BigInteger.valueOf(b);
+
+		// findGen(bp, ba, bb);
+		// E(bp, ba, bb, true, true);
+
+		for (int j = 1; j <= 50; j++) {
+			bexp = BigInteger.valueOf(j);
+			pointModExp(bpx, bpy, bexp, bp, ba, bb, false, true);
+		}
+	}
+}
