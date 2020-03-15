@@ -1,5 +1,13 @@
 Elliptic Curve Cryptography
 Point Modular Exponentiation:
+From p^1 ---> p^50
+With the following Variable Input:
+		px = 3;
+		py = 388;
+		a = 13;
+		b = 17;
+		p = 7919;
+    
 (3,388)^1 (mod 7919) On:
 y^2 mod7919= (x^3 +13x +17)mod 7919
 1p^1 = 1*P =  (3, 388)
