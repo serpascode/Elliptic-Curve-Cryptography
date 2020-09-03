@@ -1,4 +1,4 @@
-# Elliptic-Curve-Cryptography
+# The Bitcoin Calculator
 A Calculator Program I wrote for Elliptic Curve Cryptography, which is a the basis of Bitcoin 
 
 The Code is an implementation of the Arithmetic behind Elliptic Curve Cryptography. 
